@@ -11,6 +11,7 @@ print filePath
 for root, dirs, files in os.walk(filePath, topdown=True):
     for name in files:
         if os.path.join(root, name).count('/') > 8:
+            print root.index('/')
             level0 = root.index('/')+1
             level1 = root.index('/', level0)+1
             level2 = root.index('/', level1)+1
@@ -24,4 +25,4 @@ for root, dirs, files in os.walk(filePath, topdown=True):
             newLocation = root[:level7]+name
             print newLocation
             shutil.move(oldLocation, newLocation)
-	    f.writerow([oldLocation]+[newLocation])
+        f.writerow([oldLocation]+[newLocation])
