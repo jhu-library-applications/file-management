@@ -11,27 +11,27 @@ args = parser.parse_args()
 if args.directory:
     directory = args.directory
 else:
-    directory = raw_input('Enter file path (C:/Test/): ')
+    directory = input('Enter file path (C:/Test/): ')
 if args.fileExtension:
     fileExtension = args.fileExtension
 else:
-    fileExtension = raw_input('Enter file extension like jpg or txt (no period before extension): ')
+    fileExtension = input('Enter file extension like jpg or txt (no period before extension): ')
 
 directoryName = directory.replace('/', '')
 directoryName = directoryName.replace(':', '')
-print directoryName
+print(directoryName)
 
 startTime = time.time()
-f = csv.writer(open(directoryName+'Listing'+'.csv', 'wb'))
+f = csv.writer(open(directoryName+'Listing'+'.csv', 'w'))
 f.writerow(['currentFilePath']+['fileName']+['newFileName'])
 directories = os.walk(directory, topdown=True)
 for filePath, subFolders, fileNames in directories:
     for fileName in fileNames:
         if fileName[-3:] == fileExtension:
-            print filePath, fileName
+            print(filePath, fileName)
             f.writerow([filePath]+[fileName])
 
 elapsedTime = time.time() - startTime
 m, s = divmod(elapsedTime, 60)
 h, m = divmod(m, 60)
-print 'Total script run time: ', '%d:%02d:%02d' % (h, m, s)
+print('Total script run time: ', '%d:%02d:%02d' % (h, m, s))

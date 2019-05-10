@@ -3,9 +3,9 @@ import shutil
 import csv
 from datetime import datetime
 
-filePath = raw_input('Enter file path (C:/Test/): ')+'/'
+filePath = input('Enter file path (C:/Test/): ')+'/'
 
-f=csv.writer(open('moveLog'+datetime.now().strftime('%Y-%m-%d %H.%M.%S')+'.csv','wb'))
+f=csv.writer(open('moveLog'+datetime.now().strftime('%Y-%m-%d %H.%M.%S')+'.csv','w'))
 f.writerow(['oldLocation']+['newLocation'])
 print filePath
 for root, dirs, files in os.walk(filePath, topdown=True):
