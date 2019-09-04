@@ -24,7 +24,7 @@ else:
     makeChanges = input('Enter "true" to if the script should actually rename the files (otherwise, it will only create a log of the expected file name changes): ')
 
 startTime = time.time()
-f=csv.writer(open('renameLog'+datetime.now().strftime('%Y-%m-%d %H.%M.%S')+'.csv','w'))
+f = csv.writer(open('renameLog'+datetime.now().strftime('%Y-%m-%d %H.%M.%S')+'.csv', 'w'))
 f.writerow(['oldFilename']+['newFilename'])
 for root, dirs, files in os.walk(directory, topdown=True):
     for file in files:
@@ -35,11 +35,11 @@ for root, dirs, files in os.walk(directory, topdown=True):
                 newFilename = row['newFile']
                 if file == oldFilename:
                     print(oldFilename)
-                    oldPath = os.path.join(root,file)
-                    newPath = os.path.join(root,newFilename)
+                    oldPath = os.path.join(root, file)
+                    newPath = os.path.join(root, newFilename)
                     f.writerow([oldPath]+[newPath])
                     if makeChanges == 'true':
-                        os.rename(oldPath,newPath)
+                        os.rename(oldPath, newPath)
                     else:
                         print('log of expected file name changes created only, no files renamed')
 

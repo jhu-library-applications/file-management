@@ -5,9 +5,9 @@ from datetime import datetime
 
 filePath = input('Enter file path (C:/Test/): ')+'/'
 
-f=csv.writer(open('moveLog'+datetime.now().strftime('%Y-%m-%d %H.%M.%S')+'.csv','w'))
+f = csv.writer(open('moveLog'+datetime.now().strftime('%Y-%m-%d %H.%M.%S')+'.csv','w'))
 f.writerow(['oldLocation']+['newLocation'])
-print filePath
+print(filePath)
 for root, dirs, files in os.walk(filePath, topdown=True):
     for name in files:
         if os.path.join(root, name).count('/') > 8:

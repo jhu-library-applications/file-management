@@ -25,10 +25,10 @@ else:
 
 startTime = time.time()
 print(startTime)
-f=csv.writer(open('renameLog'+datetime.now().strftime('%Y-%m-%d %H.%M.%S')+'.csv','w'))
+f = csv.writer(open('renameLog'+datetime.now().strftime('%Y-%m-%d %H.%M.%S')+'.csv', 'w'))
 f.writerow(['oldLocation']+['newLocation'])
 for root, dirs, files in os.walk(directory, topdown=False):
-    for dir in dirs :
+    for dir in dirs:
         print(dir)
         with open(fileNameCSV) as csvfile:
             reader = csv.DictReader(csvfile)
@@ -36,11 +36,11 @@ for root, dirs, files in os.walk(directory, topdown=False):
                 oldFolder = row['oldFolder']
                 newFolder = row['newFolder']
                 if dir == oldFolder:
-                    oldPath = os.path.join(root,dir)
-                    newPath = os.path.join(root,newFolder)
+                    oldPath = os.path.join(root, dir)
+                    newPath = os.path.join(root, newFolder)
                     f.writerow([oldPath]+[newPath])
                     if makeChanges == 'true':
-                        os.rename(oldPath,newPath)
+                        os.rename(oldPath, newPath)
                     else:
                         print('log of expected directory name changes created only, no files renamed')
 

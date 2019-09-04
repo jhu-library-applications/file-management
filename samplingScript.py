@@ -7,7 +7,7 @@ import itertools
 
 filePath = input('Enter file path (C:/Test/): ')
 
-f=csv.writer(open('sampledLog'+datetime.now().strftime('%Y-%m-%d %H.%M.%S')+'.csv','w'))
+f = csv.writer(open('sampledLog'+datetime.now().strftime('%Y-%m-%d %H.%M.%S')+'.csv', 'w'))
 f.writerow(['oldLocation']+['newLocation'])
 
 for root, dirs, files in os.walk(filePath, topdown=True):

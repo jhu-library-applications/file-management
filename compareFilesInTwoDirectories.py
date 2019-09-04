@@ -19,9 +19,9 @@ else:
     secondaryFilePath = input('Enter secondary file path (C:/Test/): ')
 
 startTime = time.time()
-f=csv.writer(open('filesMissingFromSecondaryDirectory'+datetime.now().strftime('%Y-%m-%d %H.%M.%S')+'.csv','w'))
+f = csv.writer(open('filesMissingFromSecondaryDirectory'+datetime.now().strftime('%Y-%m-%d %H.%M.%S')+'.csv', 'w'))
 f.writerow(['directory']+['file'])
-f2=csv.writer(open('filesMissingFromPrimaryDirectory'+datetime.now().strftime('%Y-%m-%d %H.%M.%S')+'.csv','w'))
+f2 = csv.writer(open('filesMissingFromPrimaryDirectory'+datetime.now().strftime('%Y-%m-%d %H.%M.%S')+'.csv', 'w'))
 f2.writerow(['directory']+['file'])
 primaryFilePathDict = {}
 for root, dirs, files in os.walk(primaryFilePath, topdown=True):

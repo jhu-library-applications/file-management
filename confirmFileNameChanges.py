@@ -20,8 +20,8 @@ else:
     fileNameCSV = input('Enter the CSV file of renameLog (including \'.csv\'): ')
 
 startTime = time.time()
-f=csv.writer(open('renameConfirmation'+datetime.now().strftime('%Y-%m-%d %H.%M.%S')+'.csv','w'))
-f.writerow(['newFileName']+['confirmation']) #This section opens the renamelog csv and checks to make sure all the updated file paths logged in the csv exist in the directory
+f = csv.writer(open('renameConfirmation'+datetime.now().strftime('%Y-%m-%d %H.%M.%S')+'.csv', 'w'))
+f.writerow(['newFileName']+['confirmation'])  # This section opens the renamelog csv and checks to make sure all the updated file paths logged in the csv exist in the directory
 with open(fileNameCSV) as csvfile:
     reader = csv.DictReader(csvfile)
     for row in reader:
@@ -45,8 +45,8 @@ with open(fileNameCSV) as csvfile:
 
 
 for filePath, subFolders, fileNames in os.walk(directory, topdown=True):
-    for fileName in fileNames: #this section checks to see if there are any file paths in the directory that aren't in the renamelog csv
-        currentPath = os.path.join(filePath,fileName)
+    for fileName in fileNames:  # this section checks to see if there are any file paths in the directory that aren't in the renamelog csv
+        currentPath = os.path.join(filePath, fileName)
         print(currentPath)
         if currentPath in updateFilePaths:
             continue
