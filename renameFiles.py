@@ -5,9 +5,14 @@ import time
 import argparse
 
 parser = argparse.ArgumentParser()
-parser.add_argument('-d', '--directory', help='the directory of the files to be renamed. optional - if not provided, the script will ask for input')
-parser.add_argument('-f', '--fileNameCSV', help='the CSV file of name changes. optional - if not provided, the script will ask for input')
-parser.add_argument('-m', '--makeChanges', help='Enter "true" to if the script should actually rename the files (otherwise, it will only create a log of the expected file name changes). optional - if not provided, the script will to "false"')
+parser.add_argument('-d', '--directory', help='the directory of the files to \
+be renamed. optional - if not provided, the script will ask for input')
+parser.add_argument('-f', '--fileNameCSV', help='the CSV file of name changes. \
+optional - if not provided, the script will ask for input')
+parser.add_argument('-m', '--makeChanges', help='Enter "true" to if the script \
+should actually rename the files (otherwise, it will only create a log of the \
+expected file name changes). optional - if not provided, the script will to \
+"false"')
 args = parser.parse_args()
 
 if args.directory:
@@ -17,15 +22,19 @@ else:
 if args.fileNameCSV:
     fileNameCSV = args.fileNameCSV
 else:
-    fileNameCSV = input('Enter the CSV file of name changes (including \'.csv\'): ')
+    fileNameCSV = input('Enter the CSV file of name changes \
+    (including \'.csv\'): ')
 if args.makeChanges:
     makeChanges = args.makeChanges
 else:
-    makeChanges = input('Enter "true" to if the script should actually rename the files (otherwise, it will only create a log of the expected file name changes): ')
+    makeChanges = input('Enter "true" to if the script should actually rename \
+    the files (otherwise, it will only create a log of the expected file name \
+    changes): ')
 
 startTime = time.time()
-f = csv.writer(open('renameLog'+datetime.now().strftime('%Y-%m-%d %H.%M.%S')+'.csv', 'w'))
-f.writerow(['oldFilename']+['newFilename'])
+f = csv.writer(open('renameLog' + datetime.now().strftime('%Y-%m-%d %H.%M.%S')
+               + '.csv', 'w'))
+f.writerow(['oldFilename'] + ['newFilename'])
 for root, dirs, files in os.walk(directory, topdown=True):
     for file in files:
         with open(fileNameCSV) as csvfile:
@@ -37,11 +46,12 @@ for root, dirs, files in os.walk(directory, topdown=True):
                     print(oldFilename)
                     oldPath = os.path.join(root, file)
                     newPath = os.path.join(root, newFilename)
-                    f.writerow([oldPath]+[newPath])
+                    f.writerow([oldPath] + [newPath])
                     if makeChanges == 'true':
                         os.rename(oldPath, newPath)
                     else:
-                        print('log of expected file name changes created only, no files renamed')
+                        print('log of expected file name changes created only, \
+                        no files renamed')
 
 elapsedTime = time.time() - startTime
 m, s = divmod(elapsedTime, 60)

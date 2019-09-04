@@ -5,8 +5,10 @@ import time
 import argparse
 
 parser = argparse.ArgumentParser()
-parser.add_argument('-1', '--primaryFilePath', help='the primary file path (C:/Test/). optional - if not provided, the script will ask for input')
-parser.add_argument('-2', '--secondaryFilePath', help='the secondary file path (C:/Test/). optional - if not provided, the script will ask for input')
+parser.add_argument('-1', '--primaryFilePath', help='the primary file path \
+(C:/Test/). optional - if not provided, the script will ask for input')
+parser.add_argument('-2', '--secondaryFilePath', help='the secondary file path \
+(C:/Test/). optional - if not provided, the script will ask for input')
 args = parser.parse_args()
 
 if args.primaryFilePath:
@@ -36,13 +38,13 @@ for k, v in primaryFilePathDict.items():
     if k in secondaryFilePathDict:
         pass
     else:
-        f.writerow([v]+[k])
+        f.writerow([v] + [k])
 
 for k, v in secondaryFilePathDict.items():
     if k in primaryFilePathDict:
         pass
     else:
-        f2.writerow([v]+[k])
+        f2.writerow([v] + [k])
 
 elapsedTime = time.time() - startTime
 m, s = divmod(elapsedTime, 60)

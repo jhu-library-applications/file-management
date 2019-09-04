@@ -3,7 +3,8 @@ import argparse
 import os
 
 parser = argparse.ArgumentParser()
-parser.add_argument('-d', '--directory', help='the directory of the files. optional - if not provided, the script will ask for input')
+parser.add_argument('-d', '--directory', help='the directory of the files. \
+optional - if not provided, the script will ask for input')
 args = parser.parse_args()
 
 if args.directory:
@@ -19,8 +20,8 @@ for root, dirs, files in os.walk(directory, topdown=True):
 f = open('checksum.md5', 'w')
 
 for file in fileList:
-    fileName = file[file.rindex('/')+1:]
+    fileName = file[file.rindex('/') + 1:]
     print(fileName)
     file = open(file, 'r').read()
     checksum = hashlib.md5(file).hexdigest()
-    f.write(checksum+'  '+fileName+'\n')
+    f.write(checksum + '  ' + fileName + '\n')
