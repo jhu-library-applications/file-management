@@ -1,57 +1,51 @@
 import os
-import csv
-from datetime import datetime
 import time
+from datetime import datetime
 import argparse
+import pandas as pd
 
 parser = argparse.ArgumentParser()
-parser.add_argument('-d', '--directory', help='the directory of the files to \
-be renamed. optional - if not provided, the script will ask for input')
-parser.add_argument('-f', '--fileNameCSV', help='the CSV file of name changes. \
-optional - if not provided, the script will ask for input')
-parser.add_argument('-m', '--makeChanges', help='Enter "true" to if the script \
-should actually rename the files (otherwise, it will only create a log of the \
-expected file name changes). optional - if not provided, the script will to \
-"false"')
+parser.add_argument('-f', '--filename', help='the CSV file of name changes.')
+parser.add_argument('-m', '--makeChanges', help='Enter "true" if script \
+                    should actually rename files. Oherwise, it only \
+                    creates a log of the expected file name changes')
 args = parser.parse_args()
 
-if args.directory:
-    directory = args.directory
+if args.filename:
+    filename = args.filename
 else:
-    directory = input('Enter the directory of the files to be renamed: ')
-if args.fileNameCSV:
-    fileNameCSV = args.fileNameCSV
-else:
-    fileNameCSV = input('Enter the CSV file of name changes \
-    (including \'.csv\'): ')
+    filename = input('Enter the CSV file of name changes: ')
 if args.makeChanges:
     makeChanges = args.makeChanges
 else:
-    makeChanges = input('Enter "true" to if the script should actually rename \
-    the files (otherwise, it will only create a log of the expected file name \
-    changes): ')
+    makeChanges = input('Enter "true" for script to actually rename files')
 
 startTime = time.time()
-f = csv.writer(open('renameLog' + datetime.now().strftime('%Y-%m-%d %H.%M.%S')
-               + '.csv', 'w'))
-f.writerow(['oldFilename'] + ['newFilename'])
-for root, dirs, files in os.walk(directory, topdown=True):
-    for file in files:
-        with open(fileNameCSV) as csvfile:
-            reader = csv.DictReader(csvfile)
-            for row in reader:
-                oldFilename = row['file']
-                newFilename = row['newFile']
-                if file == oldFilename:
-                    print(oldFilename)
-                    oldPath = os.path.join(root, file)
-                    newPath = os.path.join(root, newFilename)
-                    f.writerow([oldPath] + [newPath])
-                    if makeChanges == 'true':
-                        os.rename(oldPath, newPath)
-                    else:
-                        print('log of expected file name changes created only, \
-                        no files renamed')
+
+df = pd.read_csv(filename)
+
+logList = []
+for count, row in df.iterrows():
+    row = row
+    dir = row['fileLocation']
+    file = row['file']
+    newFilename = row['newFile']
+    oldPath = os.path.join(dir, file)
+    row['oldPath'] = oldPath
+    newPath = os.path.join(dir, newFilename)
+    row['newPath'] = newPath
+    if makeChanges == 'true':
+        os.rename(oldPath, newPath)
+        row['changed'] = 'True'
+    else:
+        print('log of expected file name changes created - no files renamed')
+        row['changed'] = 'False'
+    logList.append(row)
+
+log = pd.DataFrame.from_dict(logList)
+print(log.head(15))
+dt = datetime.now().strftime('%Y-%m-%d %H.%M.%S')
+log.to_csv('logOfEditingMetadataByItemID_'+dt+'.csv', index=False)
 
 elapsedTime = time.time() - startTime
 m, s = divmod(elapsedTime, 60)
